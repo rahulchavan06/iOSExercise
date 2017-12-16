@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "Content.h"
+#import "Constants.h"
+
 
 @interface HomeContentService : NSObject
 
-+ (void)callGetContentFeedData:(NSString *)urlString andCompletionBlock:(void (^)(BOOL status, Content *content))completionBlock;
++ (void)callGetContentFeedData:(NSString *)urlString andCompletionBlock:(void (^)(ServiceStatus status, Content *content))completionBlock;
 
 @end

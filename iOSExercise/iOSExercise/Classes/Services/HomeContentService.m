@@ -7,12 +7,12 @@
 //
 
 #import "HomeContentService.h"
-#import "Constants.h"
+
 #import "ContentRows.h"
 
 @implementation HomeContentService
 
-+ (void)callGetContentFeedData:(NSString *)urlString andCompletionBlock:(void (^)(BOOL status, Content *content))completionBlock {
++ (void)callGetContentFeedData:(NSString *)urlString andCompletionBlock:(void (^)(ServiceStatus status, Content *content))completionBlock {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -42,16 +42,15 @@
                     [content.rows addObject: [ContentRows contentRowsModelFromDictionary:dict]];
                 }
                 //Return Parsed data model and success status
-                completionBlock(YES, content);
+                dispatch_async(dispatch_get_main_queue(), ^ {
+                    completionBlock(ServiceSuccess, content);
+                });
             } else if ([data length] == 0 && error == nil) {
-//                [delegate emptyReply];
-                completionBlock(NO, nil);
+                completionBlock(ServiceSuccessNoData, nil);
             } else if (error != nil && error.code == ERROR_CODE_TIMEOUT) {
-//                [delegate timedOut];
-                completionBlock(NO, nil);
+                completionBlock(ServiceTimeout, nil);
             } else if (error != nil) {
-//                [delegate downloadError:error];
-                completionBlock(NO, nil);
+                completionBlock(ServiceFail, nil);
                 
             }
         }];

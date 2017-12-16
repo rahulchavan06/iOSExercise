@@ -22,6 +22,11 @@
 		A06322C61FE27F0600819D9B /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = A06322BB1FE278E700819D9B /* Reachability.m */; };
 		A06322C91FE288C400819D9B /* HomeContentService.m in Sources */ = {isa = PBXBuildFile; fileRef = A06322C81FE288C400819D9B /* HomeContentService.m */; };
 		A06322D31FE2EBD700819D9B /* ContentRows.m in Sources */ = {isa = PBXBuildFile; fileRef = A06322D21FE2EBD700819D9B /* ContentRows.m */; };
+		A06322E61FE3AB4000819D9B /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A06322DC1FE3AB4000819D9B /* ALView+PureLayout.m */; };
+		A06322E71FE3AB4000819D9B /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A06322DE1FE3AB4000819D9B /* NSArray+PureLayout.m */; };
+		A06322E81FE3AB4000819D9B /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = A06322E01FE3AB4000819D9B /* NSLayoutConstraint+PureLayout.m */; };
+		A06322E91FE3AB4000819D9B /* NSLayoutConstraint+RDAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A06322E21FE3AB4000819D9B /* NSLayoutConstraint+RDAdditions.m */; };
+		A06322EC1FE3AF8500819D9B /* FeedsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = A06322EB1FE3AF8500819D9B /* FeedsTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +76,20 @@
 		A06322C81FE288C400819D9B /* HomeContentService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeContentService.m; sourceTree = "<group>"; };
 		A06322D11FE2EBD700819D9B /* ContentRows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentRows.h; sourceTree = "<group>"; };
 		A06322D21FE2EBD700819D9B /* ContentRows.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentRows.m; sourceTree = "<group>"; };
+		A06322DB1FE3AB4000819D9B /* ALView+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALView+PureLayout.h"; sourceTree = "<group>"; };
+		A06322DC1FE3AB4000819D9B /* ALView+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALView+PureLayout.m"; sourceTree = "<group>"; };
+		A06322DD1FE3AB4000819D9B /* NSArray+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+PureLayout.h"; sourceTree = "<group>"; };
+		A06322DE1FE3AB4000819D9B /* NSArray+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+PureLayout.m"; sourceTree = "<group>"; };
+		A06322DF1FE3AB4000819D9B /* NSLayoutConstraint+PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+PureLayout.h"; sourceTree = "<group>"; };
+		A06322E01FE3AB4000819D9B /* NSLayoutConstraint+PureLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+PureLayout.m"; sourceTree = "<group>"; };
+		A06322E11FE3AB4000819D9B /* NSLayoutConstraint+RDAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSLayoutConstraint+RDAdditions.h"; sourceTree = "<group>"; };
+		A06322E21FE3AB4000819D9B /* NSLayoutConstraint+RDAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSLayoutConstraint+RDAdditions.m"; sourceTree = "<group>"; };
+		A06322E31FE3AB4000819D9B /* PureLayout+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PureLayout+Internal.h"; sourceTree = "<group>"; };
+		A06322E41FE3AB4000819D9B /* PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayout.h; sourceTree = "<group>"; };
+		A06322E51FE3AB4000819D9B /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
+		A06322EA1FE3AF8500819D9B /* FeedsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeedsTableViewCell.h; sourceTree = "<group>"; };
+		A06322EB1FE3AF8500819D9B /* FeedsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedsTableViewCell.m; sourceTree = "<group>"; };
+		A06323131FE54ADE00819D9B /* placeHolderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeHolderImage.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +209,8 @@
 		A06322AC1FE24FAF00819D9B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A06322EA1FE3AF8500819D9B /* FeedsTableViewCell.h */,
+				A06322EB1FE3AF8500819D9B /* FeedsTableViewCell.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -216,6 +237,7 @@
 		A06322AF1FE24FC900819D9B /* 3rdPartyLibs */ = {
 			isa = PBXGroup;
 			children = (
+				A06322DA1FE3AB4000819D9B /* PureLayout */,
 				A06322B11FE24FE700819D9B /* Reachability */,
 			);
 			path = 3rdPartyLibs;
@@ -250,6 +272,7 @@
 		A06322B31FE24FF500819D9B /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				A06323131FE54ADE00819D9B /* placeHolderImage.png */,
 			);
 			path = Assets;
 			sourceTree = "<group>";
@@ -277,6 +300,24 @@
 				A06322C21FE27C3B00819D9B /* SystemConfiguration.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A06322DA1FE3AB4000819D9B /* PureLayout */ = {
+			isa = PBXGroup;
+			children = (
+				A06322DB1FE3AB4000819D9B /* ALView+PureLayout.h */,
+				A06322DC1FE3AB4000819D9B /* ALView+PureLayout.m */,
+				A06322DD1FE3AB4000819D9B /* NSArray+PureLayout.h */,
+				A06322DE1FE3AB4000819D9B /* NSArray+PureLayout.m */,
+				A06322DF1FE3AB4000819D9B /* NSLayoutConstraint+PureLayout.h */,
+				A06322E01FE3AB4000819D9B /* NSLayoutConstraint+PureLayout.m */,
+				A06322E11FE3AB4000819D9B /* NSLayoutConstraint+RDAdditions.h */,
+				A06322E21FE3AB4000819D9B /* NSLayoutConstraint+RDAdditions.m */,
+				A06322E31FE3AB4000819D9B /* PureLayout+Internal.h */,
+				A06322E41FE3AB4000819D9B /* PureLayout.h */,
+				A06322E51FE3AB4000819D9B /* PureLayoutDefines.h */,
+			);
+			path = PureLayout;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -414,8 +455,13 @@
 			files = (
 				A06322C91FE288C400819D9B /* HomeContentService.m in Sources */,
 				A063227C1FE24E6400819D9B /* HomeContentVC.m in Sources */,
+				A06322E91FE3AB4000819D9B /* NSLayoutConstraint+RDAdditions.m in Sources */,
 				A06322871FE24E6400819D9B /* main.m in Sources */,
 				A06322C01FE27C2600819D9B /* NetworkUtils.m in Sources */,
+				A06322E81FE3AB4000819D9B /* NSLayoutConstraint+PureLayout.m in Sources */,
+				A06322E71FE3AB4000819D9B /* NSArray+PureLayout.m in Sources */,
+				A06322EC1FE3AF8500819D9B /* FeedsTableViewCell.m in Sources */,
+				A06322E61FE3AB4000819D9B /* ALView+PureLayout.m in Sources */,
 				A06322791FE24E6400819D9B /* AppDelegate.m in Sources */,
 				A06322C61FE27F0600819D9B /* Reachability.m in Sources */,
 				A06322D31FE2EBD700819D9B /* ContentRows.m in Sources */,

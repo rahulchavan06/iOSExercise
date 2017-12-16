@@ -28,9 +28,19 @@
 #define HELVETICA_NEUE @"HelveticaNeueLTStd-Md"
 
 //FONT SIZE
-#define FONT_SIZE_15 15.0f
+#define FONT_SIZE_17 17.0f
+#define FONT_SIZE_19 19.0f
 #define FONT_SIZE_21 21.0F
 
 //TEXT COLOR
 #define Dark_Gray_RGB   @"51,51,51"
 #define Light_Gray_RGB  @"77,77,77"
+
+
+typedef enum {
+    ServiceSuccess = 1,
+    ServiceSuccessNoData,
+    ServiceTimeout,
+    ServiceFail,
+} ServiceStatus;
+
