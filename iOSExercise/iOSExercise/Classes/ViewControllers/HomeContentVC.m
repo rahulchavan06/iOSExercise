@@ -13,6 +13,9 @@
 #import "FeedsTableViewCell.h"
 #import "PureLayout.h"
 
+static CGFloat LeftInset = 10.0f;
+static CGFloat RightInset = 10.0f;
+
 @interface HomeContentVC () <UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, strong) Content *contentData;
@@ -46,7 +49,6 @@
 #pragma mark - Refresh View
 
 - (void)refreshView {
-
     //Call fetch content Api to refresh view
     [self callGetHomeContentApi];
 }
@@ -77,30 +79,7 @@
     return [self calculateCellHeight:indexPath.row]+20;
 }
 
-- (CGFloat)calculateCellHeight:(NSInteger)rowId {
-    //Calculate table row cell Height
-    ContentRows *contentRow = [self.contentData.rows objectAtIndex: rowId];
-    CGFloat height = [self calculateTextHeight:contentRow.contentTitle withFontSize:21.0];
-    height = height + [self calculateTextHeight:contentRow.contentDescription withFontSize:17.0];
-    height = height;
-    return height;
-}
-
-- (CGFloat)calculateTextHeight:(NSString*)text withFontSize:(CGFloat)fontSize {
-    //Calculate Text height
-    UIFont *font = [UIFont fontWithName:@"Helvetica-BoldOblique" size:fontSize];
-    CGSize constraint = CGSizeMake(self.feedsTableview.frame.size.width-120,9999);
-    NSDictionary *attributes = @{NSFontAttributeName: font};
-    CGRect rect = [text boundingRectWithSize:constraint
-                                       options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
-                                    attributes:attributes
-                                       context:nil];
-    return rect.size.height;
-}
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     static NSString *tableViewCellIdentifier = @"FeedsTableViewCell";
     FeedsTableViewCell *cell = (FeedsTableViewCell*)[tableView dequeueReusableCellWithIdentifier:tableViewCellIdentifier];
     ContentRows *contentRow = [self.contentData.rows objectAtIndex:indexPath.row];
@@ -130,22 +109,45 @@
     return cell;
 }
 
+#pragma mark - Calculate TableViewCell Heights
+
+- (CGFloat)calculateCellHeight:(NSInteger)rowId {
+    //Calculate table row cell Height
+    ContentRows *contentRow = [self.contentData.rows objectAtIndex: rowId];
+    CGFloat height = [self calculateTextHeight:contentRow.contentTitle withFontSize:21.0];
+    height = height + [self calculateTextHeight:contentRow.contentDescription withFontSize:17.0];
+    height = height;
+    return height;
+}
+
+- (CGFloat)calculateTextHeight:(NSString*)text withFontSize:(CGFloat)fontSize {
+    //Calculate Text height
+    UIFont *font = [UIFont fontWithName:@"Helvetica-BoldOblique" size:fontSize];
+    CGSize constraint = CGSizeMake(self.feedsTableview.frame.size.width-120,9999);
+    NSDictionary *attributes = @{NSFontAttributeName: font};
+    CGRect rect = [text boundingRectWithSize:constraint
+                                     options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
+                                  attributes:attributes
+                                     context:nil];
+    return rect.size.height;
+}
+
 #pragma mark - set UITableViewCell Constraints
 
 - (void)setTableViewCellConstraints:(FeedsTableViewCell*)cell withIndexPath:(NSIndexPath*)indexpath {
     [cell.feedsImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:10.0f];
-    [cell.feedsImageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:10.0f];
-    [cell.feedsImageView autoSetDimension:ALDimensionWidth toSize:90.0];
+    [cell.feedsImageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LeftInset];
+    [cell.feedsImageView autoSetDimension:ALDimensionWidth toSize:90.0f];
     [cell.feedsImageView autoSetDimension:ALDimensionHeight toSize:[self calculateCellHeight:indexpath.row]];
     
     [cell.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0.0f];
-    [cell.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:110];
-    [cell.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:10.0];
+    [cell.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:110.0f];
+    [cell.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:RightInset];
     [cell.titleLabel autoSetDimension:ALDimensionHeight toSize:[self calculateTextHeight:cell.titleLabel.text withFontSize:FONT_SIZE_21]];
     
     [cell.descriptionLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:cell.titleLabel];
-    [cell.descriptionLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:110.0];
-    [cell.descriptionLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0.0f];
+    [cell.descriptionLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:110.0f];
+    [cell.descriptionLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:RightInset];
     [cell.descriptionLabel autoSetDimension:ALDimensionHeight toSize:[self calculateTextHeight:cell.descriptionLabel.text withFontSize:FONT_SIZE_19]];
 }
 
@@ -161,20 +163,20 @@
                 self.navigationItem.title = self.contentData.title;
                 [self createFeedTableView];
             } else if(status == 2) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert!"
                                                                     message:@"There are no feeds available."
                                                                    delegate:self
                                                           cancelButtonTitle:nil
                                                           otherButtonTitles:@"OK", nil];
                 [alertView show];
             } else if(status == 3) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@""
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Try Again!"
                                                                     message:@"Request is Timed Out, Please try again."
                                                                    delegate:self
                                                           cancelButtonTitle:nil
                                                           otherButtonTitles:@"OK", nil];
                 [alertView show];
-            }
+            } 
         }];
     } else {
         //No internet connectivity alert

@@ -31,7 +31,7 @@
 
 #pragma mark - Configure UITableViewCell
 
-- (void)configureTableViewCell/*:(ContentRows*)contentRows*/ {
+- (void)configureTableViewCell {
 
     //Set Feed title
     self.feedsImageView = [[UIImageView alloc] initForAutoLayout];

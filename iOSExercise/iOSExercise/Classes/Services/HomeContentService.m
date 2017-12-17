@@ -24,8 +24,7 @@
         //set request content type
         [request setValue:kContentTypeValue forHTTPHeaderField:kContentTypeHeader];
         //call asynchronous request using NSURLConnection
-        [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error)
-        {
+        [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
             if ([data length] > 0 && error == nil) {
                 //Request executes successfully and fetched data. convert to NSString
                 NSString* jsonString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
@@ -35,12 +34,8 @@
                 NSDictionary *allKeys = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&jsonError];
                 
                 //create model object and store parsed data into the model
-                Content *content = [[Content alloc] init];
-                content.title = [allKeys valueForKey:@"title"];
-                content.rows = [[NSMutableArray alloc] init];
-                for (NSDictionary *dict in [allKeys valueForKey:@"rows"]) {
-                    [content.rows addObject: [ContentRows contentRowsModelFromDictionary:dict]];
-                }
+                Content *content = [Content contentModelFromDictionary:allKeys];
+
                 //Return Parsed data model and success status
                 dispatch_async(dispatch_get_main_queue(), ^ {
                     completionBlock(ServiceSuccess, content);
@@ -51,7 +46,6 @@
                 completionBlock(ServiceTimeout, nil);
             } else if (error != nil) {
                 completionBlock(ServiceFail, nil);
-                
             }
         }];
     });

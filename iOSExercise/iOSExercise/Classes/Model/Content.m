@@ -14,6 +14,7 @@
     //create Json mapping dictionary with model key and Json key
     return [[NSDictionary alloc] initWithObjectsAndKeys:
             @"title",@"title",
+            @"rows", @"rows",
             nil];
 }
 
@@ -26,10 +27,17 @@
         NSString *classProperty = [mapping objectForKey:attribute];
         //Retrieve value for the respective propery
         NSString *attributeValue = [dictionary objectForKey:attribute];
-        if (attributeValue!=nil&&!([attributeValue isKindOfClass:[NSNull class]])) {
+       if (attributeValue!=nil&&([attributeValue isKindOfClass:[NSArray class]])) {
             //set value to respective model property
-            [content setValue:attributeValue forKeyPath:classProperty];
-        }
+           NSArray *dictArray = [dictionary objectForKey:attribute];
+           content.rows = [[NSMutableArray alloc] init];
+           for (NSDictionary *dict in dictArray) {
+               [content.rows addObject: [ContentRows contentRowsModelFromDictionary:dict]];
+           }
+       } else if (attributeValue!=nil&&!([attributeValue isKindOfClass:[NSNull class]])) {
+           //set value to respective model property
+           [content setValue:attributeValue forKeyPath:classProperty];
+       }
     }
     return content;
 }
