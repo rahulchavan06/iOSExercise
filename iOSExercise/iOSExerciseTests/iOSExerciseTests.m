@@ -7,8 +7,11 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "HomeContentVC.h"
 
 @interface iOSExerciseTests : XCTestCase
+
+@property (nonatomic) HomeContentVC *homeContentVC;
 
 @end
 
@@ -16,7 +19,8 @@
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    self.homeContentVC = [[HomeContentVC alloc] init];
 }
 
 - (void)tearDown {
@@ -24,15 +28,17 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testGetFeedAPIRefreshPerformance {
+    [self measureBlock:^{
+        [self.homeContentVC refreshView];
+    }];
+
 }
 
-- (void)testPerformanceExample {
+- (void)testGetFeedAPIPerformance {
     // This is an example of a performance test case.
     [self measureBlock:^{
-        // Put the code you want to measure the time of here.
+        [self.homeContentVC callGetHomeContentApi];
     }];
 }
 

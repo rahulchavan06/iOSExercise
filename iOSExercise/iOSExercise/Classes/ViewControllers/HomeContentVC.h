@@ -11,5 +11,14 @@
 @interface HomeContentVC : UIViewController
 
 
+
 @end
+
+@interface HomeContentVC (Refresh)
+
+- (void)callGetHomeContentApi;
+- (void)refreshView;
+
+@end
+
 
