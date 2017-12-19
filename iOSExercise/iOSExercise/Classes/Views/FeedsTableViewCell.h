@@ -10,11 +10,11 @@
 
 @interface FeedsTableViewCell : UITableViewCell
 
-@property(nonatomic, strong)UILabel *titleLabel;
-@property(nonatomic, strong)UILabel *descriptionLabel;
-@property(nonatomic, strong)UIImageView *feedsImageView;
+@property(strong, nonatomic) UILabel *titleLabel;
+@property(strong, nonatomic) UILabel *descriptionLabel;
+@property(nonatomic, strong) UIImageView *feedsImageView;
 
-- (void)configureTableViewCell;
+- (void)updateFonts;
 
 @end
 

@@ -11,10 +11,10 @@
 #import "Constants.h"
 #import "NetworkUtils.h"
 #import "FeedsTableViewCell.h"
-#import "PureLayout.h"
+#import "ImageUtils.h"
 
-static CGFloat LeftInset = 10.0f;
-static CGFloat RightInset = 10.0f;
+
+static NSString *CellIdentifier = @"CellIdentifier";
 
 @interface HomeContentVC () <UITableViewDelegate, UITableViewDataSource>
 
@@ -37,12 +37,41 @@ static CGFloat RightInset = 10.0f;
     self.navigationItem.rightBarButtonItem=refreshBtn;
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [self.feedsTableview reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(contentSizeCategoryChanged:)
+                                                 name:UIContentSizeCategoryDidChangeNotification
+                                               object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:UIContentSizeCategoryDidChangeNotification
+                                                  object:nil];
+}
+
+// This method is called when the Dynamic Type user setting changes (from the system Settings app)
+- (void)contentSizeCategoryChanged:(NSNotification *)notification
+{
     [self.feedsTableview reloadData];
 }
 
@@ -60,6 +89,10 @@ static CGFloat RightInset = 10.0f;
     self.feedsTableview = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.feedsTableview.delegate = self;
     self.feedsTableview.dataSource = self;
+    
+    self.feedsTableview.rowHeight = UITableViewAutomaticDimension;
+    self.feedsTableview.estimatedRowHeight = 44.0;
+    
     self.feedsTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.feedsTableview.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.feedsTableview];
@@ -75,80 +108,30 @@ static CGFloat RightInset = 10.0f;
     return self.contentData.rows.count;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self calculateCellHeight:indexPath.row]+20;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *tableViewCellIdentifier = @"FeedsTableViewCell";
-    FeedsTableViewCell *cell = (FeedsTableViewCell*)[tableView dequeueReusableCellWithIdentifier:tableViewCellIdentifier];
-    ContentRows *contentRow = [self.contentData.rows objectAtIndex:indexPath.row];
     
+    FeedsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     cell = [[FeedsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                     reuseIdentifier:tableViewCellIdentifier];
+                                     reuseIdentifier:CellIdentifier];
 
-    // Configure the cell...
-
-    //Call Async task to Load Feed Image
-    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:contentRow.contentImagePath]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+    ContentRows *contentRow = [self.contentData.rows objectAtIndex:indexPath.row];
+    // Configure the cell for this indexPath
+    [cell updateFonts];
+    cell.titleLabel.text =  contentRow.contentTitle;
+    cell.descriptionLabel.text = contentRow.contentDescription;
+    [ImageUtils downloadUIImageInBackground:contentRow.contentImagePath andCompletionBlock:^(NSData* data){
         cell.feedsImageView.image = [UIImage imageWithData:data];
     }];
     
-    //Set Feed data
-    cell.titleLabel.text = contentRow.contentTitle;
-    [cell.descriptionLabel setText:contentRow.contentDescription];
+    // Update constraints to this cell
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
 
-    //Adjust table constraints
-    [self setTableViewCellConstraints:cell withIndexPath:indexPath];
-    
-    //Set Cell properties to set alternate background color and cell selection style
-    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     if (indexPath.row % 2 == 0) {
         cell.backgroundColor = [UIColor colorWithRed:250.0/255.0 green:250.0/255.0 blue:250.0/255.0 alpha:1.0];
     }
+    
     return cell;
-}
-
-#pragma mark - Calculate TableViewCell Heights
-
-- (CGFloat)calculateCellHeight:(NSInteger)rowId {
-    //Calculate table row cell Height
-    ContentRows *contentRow = [self.contentData.rows objectAtIndex: rowId];
-    CGFloat height = [self calculateTextHeight:contentRow.contentTitle withFontSize:21.0];
-    height = height + [self calculateTextHeight:contentRow.contentDescription withFontSize:17.0];
-    height = height;
-    return height;
-}
-
-- (CGFloat)calculateTextHeight:(NSString*)text withFontSize:(CGFloat)fontSize {
-    //Calculate Text height
-    UIFont *font = [UIFont fontWithName:@"Helvetica-BoldOblique" size:fontSize];
-    CGSize constraint = CGSizeMake(self.feedsTableview.frame.size.width-120,9999);
-    NSDictionary *attributes = @{NSFontAttributeName: font};
-    CGRect rect = [text boundingRectWithSize:constraint
-                                     options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
-                                  attributes:attributes
-                                     context:nil];
-    return rect.size.height;
-}
-
-#pragma mark - set UITableViewCell Constraints
-
-- (void)setTableViewCellConstraints:(FeedsTableViewCell*)cell withIndexPath:(NSIndexPath*)indexpath {
-    [cell.feedsImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:10.0f];
-    [cell.feedsImageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:LeftInset];
-    [cell.feedsImageView autoSetDimension:ALDimensionWidth toSize:90.0f];
-    [cell.feedsImageView autoSetDimension:ALDimensionHeight toSize:[self calculateCellHeight:indexpath.row]];
-    
-    [cell.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0.0f];
-    [cell.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:110.0f];
-    [cell.titleLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:RightInset];
-    [cell.titleLabel autoSetDimension:ALDimensionHeight toSize:[self calculateTextHeight:cell.titleLabel.text withFontSize:FONT_SIZE_21]];
-    
-    [cell.descriptionLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:cell.titleLabel];
-    [cell.descriptionLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:110.0f];
-    [cell.descriptionLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:RightInset];
-    [cell.descriptionLabel autoSetDimension:ALDimensionHeight toSize:[self calculateTextHeight:cell.descriptionLabel.text withFontSize:FONT_SIZE_19]];
 }
 
 #pragma mark - Web service call

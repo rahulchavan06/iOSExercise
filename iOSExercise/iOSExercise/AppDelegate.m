@@ -19,13 +19,30 @@
     // Override point for customization after application launch.
     
     //Loading RootViewController
+    [application setStatusBarHidden:NO];
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     HomeContentVC *homeContentVC = [[HomeContentVC alloc] init];
+    homeContentVC.view.frame = self.window.bounds;
     UINavigationController *navig = [[UINavigationController alloc] initWithRootViewController:homeContentVC];
     self.window.rootViewController = navig;
     self.window.backgroundColor = [UIColor whiteColor];
-    
+    self.window.opaque = NO;
+    [self.window makeKeyAndVisible];
     return YES;
 }
+
+
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    if ([self.window.rootViewController.presentedViewController isKindOfClass:[HomeContentVC class]]) {
+        
+        return UIInterfaceOrientationMaskAll;
+        
+    } else {
+        self.window.frame = [UIScreen mainScreen].bounds;
+        return UIInterfaceOrientationMaskAll;
+    }
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
