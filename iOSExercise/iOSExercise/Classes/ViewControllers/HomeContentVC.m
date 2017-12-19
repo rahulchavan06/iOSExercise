@@ -50,8 +50,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
     [self.feedsTableview reloadData];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -60,8 +59,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
                                                object:nil];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -70,8 +68,7 @@ static NSString *CellIdentifier = @"CellIdentifier";
 }
 
 // This method is called when the Dynamic Type user setting changes (from the system Settings app)
-- (void)contentSizeCategoryChanged:(NSNotification *)notification
-{
+- (void)contentSizeCategoryChanged:(NSNotification *)notification {
     [self.feedsTableview reloadData];
 }
 
@@ -89,10 +86,8 @@ static NSString *CellIdentifier = @"CellIdentifier";
     self.feedsTableview = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.feedsTableview.delegate = self;
     self.feedsTableview.dataSource = self;
-    
     self.feedsTableview.rowHeight = UITableViewAutomaticDimension;
     self.feedsTableview.estimatedRowHeight = 44.0;
-    
     self.feedsTableview.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.feedsTableview.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.feedsTableview];

@@ -20,9 +20,7 @@
 
 @implementation FeedsTableViewCell
 
-
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.titleLabel = [UILabel newAutoLayoutView];
@@ -30,19 +28,19 @@
         [self.titleLabel setNumberOfLines:1];
         [self.titleLabel setTextAlignment:NSTextAlignmentLeft];
         [self.titleLabel setTextColor:[UIColor blackColor]];
-        self.titleLabel.backgroundColor = [UIColor clearColor]; // light blue
+        self.titleLabel.backgroundColor = [UIColor clearColor];
         
         self.descriptionLabel = [UILabel newAutoLayoutView];
         [self.descriptionLabel setLineBreakMode:NSLineBreakByTruncatingTail];
         [self.descriptionLabel setNumberOfLines:0];
         [self.descriptionLabel setTextAlignment:NSTextAlignmentLeft];
         [self.descriptionLabel setTextColor:[UIColor darkGrayColor]];
-        self.descriptionLabel.backgroundColor = [UIColor clearColor]; // light red
+        self.descriptionLabel.backgroundColor = [UIColor clearColor];
         
         self.feedsImageView = [UIImageView newAutoLayoutView];
         [self.feedsImageView setContentMode:UIViewContentModeScaleAspectFit];
         
-        self.contentView.backgroundColor = [UIColor clearColor]; // light green
+        self.contentView.backgroundColor = [UIColor clearColor];
         
         [self.contentView addSubview:self.titleLabel];
         [self.contentView addSubview:self.descriptionLabel];
@@ -50,12 +48,10 @@
         
         [self updateFonts];
     }
-    
     return self;
 }
 
-- (void)updateConstraints
-{
+- (void)updateConstraints {
     if (!self.didSetupConstraints) {
         
 //        [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
@@ -87,61 +83,9 @@
     [super updateConstraints];
 }
 
-- (void)updateFonts
-{
+- (void)updateFonts {
     self.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     self.descriptionLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleCaption2];
 }
-
-
-//- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-//    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-//    if (self) {
-//        // Initialization code
-//
-//        [self configureTableViewCell];
-//    }
-//    return self;
-//}
-//
-//- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-//    [super setSelected:selected animated:animated];
-//
-//    // Configure the view for the selected state
-//}
-//
-//#pragma mark - Configure UITableViewCell
-//
-//- (void)configureTableViewCell {
-//
-//    //Set Feed title
-//    self.feedsImageView = [[UIImageView alloc] initForAutoLayout];
-//    self.feedsImageView.backgroundColor = [UIColor clearColor];
-//    [self.contentView addSubview:self.feedsImageView];
-//    //We can set Image scaleAspect as 'ScaleToAspectFill', For showing Full ImageView Size I kept as 'ScaleToAspectFit'
-//    [self.feedsImageView setContentMode:UIViewContentModeScaleAspectFit];
-//
-//    //Set Feed title
-//    self.titleLabel = [[UILabel alloc] initForAutoLayout];
-//    [self.titleLabel setBackgroundColor:[UIColor clearColor]];
-//    self.titleLabel.font = [UIFont boldSystemFontOfSize:FONT_SIZE_21];
-//    [self.titleLabel setTextColor:UIColor.darkGrayColor];
-//    [self.titleLabel setTextAlignment:NSTextAlignmentLeft];
-//    [self.titleLabel setLineBreakMode:NSLineBreakByWordWrapping];
-//    [self.titleLabel setNumberOfLines:0];
-//    [self.titleLabel sizeToFit];
-//    [self addSubview:self.titleLabel];
-//
-//    //Set Feed description
-//    self.descriptionLabel = [[UILabel alloc] initForAutoLayout];
-//    [self.descriptionLabel setBackgroundColor:[UIColor clearColor]];
-//    self.descriptionLabel.font = [UIFont systemFontOfSize:FONT_SIZE_17];
-//    [self.descriptionLabel setTextColor:UIColor.darkGrayColor];
-//    [self.descriptionLabel setTextAlignment:NSTextAlignmentLeft];
-//    [self.descriptionLabel setLineBreakMode:NSLineBreakByWordWrapping];
-//    [self.descriptionLabel setNumberOfLines:0];
-//    [self.descriptionLabel sizeToFit];
-//    [self.contentView addSubview:self.descriptionLabel];
-//}
 
 @end
